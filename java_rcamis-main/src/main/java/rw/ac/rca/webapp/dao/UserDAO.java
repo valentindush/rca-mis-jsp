@@ -36,6 +36,8 @@ public interface UserDAO {
 	
 	public List<User> getUserByUserRoleAndApprovalStatus(UserRole userRole);
 
+    User getUserByEmailAddress(String email);
+
     interface ParentDAO {
     }
 }

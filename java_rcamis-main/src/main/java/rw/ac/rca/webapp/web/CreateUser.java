@@ -75,7 +75,53 @@ public class CreateUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HttpSession httpSession = request.getSession();
+		User user = new User();
+		String usernameauth = request.getParameter("username");
+		String passwordauth = request.getParameter("password");
+		String userfullname = request.getParameter("userfullname");
+		String email = request.getParameter("email");
+		String userRole = request.getParameter("userRole");
+		UserRole usrr = UserRole.valueOf(userRole);
+
+		User user1 = userDAO.getUserByEmailAddress(email);
+		if (user1 != null) {
+			httpSession.setAttribute("message", "Email already exists");
+			request.getRequestDispatcher("WEB-INF/pages/createuser.jsp").forward(
+					request, response);
+			return;
+		}
+		User user2 = (User) userDAO.getUserByUsername(usernameauth);
+		if (user2 != null) {
+			httpSession.setAttribute("message", "Username already exists");
+			request.getRequestDispatcher("WEB-INF/pages/createuser.jsp").forward(
+					request, response);
+			return;
+		}
+		try {
+			String hashedPsw = Util.generateHashed512(passwordauth);
+			user.setUsername(usernameauth);
+			user.setPassword(hashedPsw);
+			user.setFullName(userfullname);
+			user.setEmail(email);
+			user.setUserRole(usrr);
+
+			User savedUser = userDAO.saveOrUpdateUser(user);
+			if (savedUser == null) {
+				httpSession.setAttribute("message", "Can't Create");
+				request.getRequestDispatcher("WEB-INF/pages/createuser.jsp").forward(
+						request, response);
+				return;
+			} else {
+				httpSession.setAttribute("message", "Created successfully");
+				// response.sendRedirect("login");
+				request.getRequestDispatcher("WEB-INF/pages/createuser.jsp").forward(
+						request, response);
+			}
+
+		} catch (Exception e) {
+			httpSession.setAttribute("message", "Can't Create");
+		}
 	}
 
 }

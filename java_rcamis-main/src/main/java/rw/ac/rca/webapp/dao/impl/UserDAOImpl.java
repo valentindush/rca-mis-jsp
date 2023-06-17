@@ -141,6 +141,21 @@ public class UserDAOImpl extends DAO implements UserDAO {
 		}
 	}
 
+	@Override
+	public  User getUserByEmailAddress(String email){
+		try {
+			begin();
+			Query query = getSession().createQuery("FROM User usr WHERE usr.email = :email");
+			query.setString("email", email);
+			User user = (User) query.uniqueResult();
+			commit();
+			return user;
+		} catch (Exception e) {
+			rollback();
+			return null;
+		}
+	}
+
 	/**
 	 * gets all users
 	 * 

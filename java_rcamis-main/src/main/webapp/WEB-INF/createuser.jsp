@@ -9,7 +9,7 @@
 <%--</jsp:include>--%>
 <html>
 <head>
-	<title>Create Course</title>
+	<title>Create User</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
@@ -24,9 +24,9 @@
 
 		<section class="w-screen h-screen overflow-hidden">
 			<h2 class="text-3xl font-semibold text-gray-800 text-center my-2">RCA MIS</h2>
-			<div class="w-[400px] mx-auto shadow border rounded p-4 mt-24">
+			<div class="w-[400px] mx-auto shadow border rounded p-4 mt-6">
 				<h2 class="text-2xl font-semibold text-center">Create a new user</h2>
-				<form action="createuser.php?page=saveDataUser" method="post" class="py-4">
+				<form action="createuser.php" method="post" class="py-4">
 					<input type="text" placeholder="username" name="username" class="p-2 border border-gray-400 outline-none mt-2 rounded block w-full active:border-blue-400 transition-all">
 					<input type="password" placeholder="password" name="password" class="p-2 border border-gray-400 outline-none mt-2 rounded block w-full active:border-blue-400 transition-all">
 					<input type="text" placeholder="full name" name="userfullname" class="p-2 border border-gray-400 outline-none mt-2 rounded block w-full active:border-blue-400 transition-all">
@@ -41,7 +41,7 @@
 							</option>
 						</c:forEach>
 					</select>
-					<button type="submit" class="w-full p-2 bg-blue-500 mt-5 rounded text-white">Create User</button>
+					<input type="submit" name="saveDataUser" value="CREATE USER" class="w-full p-2 bg-blue-500 mt-5 rounded text-white" />
 
 					<div class="pt-2">
 						<p class="text-center">Already have account? <a href="login.php?" class="text-blue-500">Login</a></p>
